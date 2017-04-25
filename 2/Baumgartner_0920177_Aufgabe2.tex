@@ -1,0 +1,75 @@
+\documentclass[12pt,a4paper]{report}
+\usepackage{amssymb,amsthm,amsmath,amscd}
+\usepackage{latexsym}
+\usepackage{enumerate}
+\usepackage[german]{babel}
+\usepackage{verbatim}
+\usepackage[hyphens]{url}
+\usepackage{hyperref}
+\usepackage[utf8]{inputenc}
+\usepackage{pdfpages} 
+
+\begin{document}
+\begin{titlepage}
+	\begin{center}
+		
+		\vspace*{1.0cm}
+		\huge
+		\textsc{\bf{PS Algorithmen für verteilte Systeme}}
+		
+		\vspace*{4.0cm}
+		\textsc{
+			\normalsize{eingereicht von} \\[0.5\baselineskip]
+			{\large Baumgartner Dominik, Dafir Samy}
+		}
+		
+		\vspace*{3.0cm}
+		\textsc{
+			\normalsize{Gruppe  1(16:00)}
+		}
+		
+	\end{center}
+	
+\end{titlepage}
+\ \\
+\textbf{Aufgabe 3:}
+Wir haben in der Vorlesung einen Routing-Algorithmus für den
+$CCC(k)$ kennengelernt. Zeigen Sie die Korrektheit dieses Algorithmus und
+analysieren Sie seine Laufzeit.\\
+\\
+Invariante: Nach dem $i$-ten Schleifendurchlauf wurden $i$ Bit-Stellen aus $u$ an die korrespondierenden Bit-Stellen in $v$ angepasst.\\
+Initialisierung: Vor dem 1. Durchlauf befinden wir uns an der Startposition. Kein Bit wurde bisher angepasst.\\
+Erhaltung: Im $i-1$-ten Schritt wurde das $i-1$ Bit aus $u$ an $v$ angepasst (durch ev. Bewegungen entlang der Hypercube Kanten) und es wurde durch Bewegung entlang der Kreiskanten auf das nächste Bit gewechselt. $\Rightarrow i-1$ Bits sind angepasst und wir stehen auf dem nächsten Bit. Im $i$-ten Schritt wird nun falls $u_i \ne v_i$ das aktuelle bit geflippt (Bewegung entlang der Hypercube Kanten). Jetzt sind $i$ Bits aus $u$ an $v$ angepasst. $\rightarrow$ Bewegung entlang der Kreiskanten zum nächsten Bit.\\
+Terminierung: Vor dem letzten Durchlauf stehen wir auf dem letzten aus $k$ Bits. Dieses wird angepass, sodass $u_k = v_k$ gilt. Nun sind alle Stellen in $u$ gleich den Stellen in $v$. $\Rightarrow$ keine weiteren Hypercube Kanten Bewegungen.\\
+Nun folgen nur noch Kreiskanten Bewegungen bis $u=v$. $\Rightarrow$ Korrektes Routing von $u$ nach $v$.\\
+\\
+Laufzeit: Schleife wird $k$-mal durchlaufen, 4 Operationen: $O(4k) \rightarrow O(k)$\\
+Im Kreis durchlaufen: maximal einmal rundherum: $O(k)$\\
+Laufzeit von $\Rightarrow O(k)$\\
+\\
+\textbf{Aufgabe 4:}
+Zeigen Sie, dass ein vollständiger Binärbaum der Höhe $k$, $k \ge 2$, kein Teilgraph des $Q(k + 1)$ ist. Beachten Sie, dass ein vollständiger Binärbaum der Höhe $k$ insgesamt $2^{k+1}-1$ Knoten enthält (für alle $i \in 0,\dots,k$ befinden sich im Level $i$ genau $2^i$ Knoten).
+\\
+Hypercube \& Binärbaum sind bipartit.\\
+Hypercube: Eube Farbe für Knoten mit gerader 1er Anzahl, eine für Knoten mit ungeraden 1er $\rightarrow$ Kanten nur zwischen Knoten versch. Farben.\\
+Binärbaum: eine Farbe für gerade, eine für ungerade Levels.\\
+m Hypercube gibt es immer gleich viele Knoten für beide Farben.
+Im vollständigen Binärbaum ist die Verteilung nie gleich. Für $k=2$ ist die Knotenverteilung (2 Knoten in ungeraden Levels, 5 Knoten in geraden Levels) und die Differenz nimmt mit steigenden Levels immer weiter zu. z.B. $k=3$: (10,5), $k=4$: (10,21),... $\rightarrow$ Der Binärbaum der Höhe $k$ hat also immer mehr Knoten einer Farbe als der Hypercube der dDimension $k+1$. Aufgrund dessen ist es nicht möglich alle Knoten und Kanten des Binärbaums auf den Hypercube abzubilden. Da Kanten nur zwischen Knoten unterschiedlicher Farben verlaufen und nicht genügend Knoten einer Farbe vorhanden sind, müssten mehrere Knoten des Binärbaums auf den gleichen Knoten im Hypercube abgebildet werden $\rightarrow$ keine korrekte Einbettung.\\
+\ \\
+\textbf{Aufgabe 5:}
+Der Doppelwurzelbaum der Höhe $k$ ist ein vollständiger Binärbaum
+der Höhe $k$, dessen Wurzel durch eine Kante ersetzt wurde. Der linke
+Teilbaum wird mit dem linken Knoten dieser Kante verbunden und der
+rechte Teilbaum wird mit dem rechten Knoten verbunden. Zeigen Sie, dass
+der Doppelwurzelbaum der Höhe $k$ Teilgraph des $Q(k + 1)$ ist.\\
+\\
+Anders als zu Aufgabe 4, ist im Doppelwurzelbaum das Ungleichgewicht der Knoten durch Aufteilung der Wurzel nicht vorhanden.\\
+$\rightarrow$ Korrekte Einbettung möglich.\\
+\begin{center}
+	\includepdf[pages={3}]{blatt02dafir.pdf}
+\end{center}
+
+
+
+\end{document}
+
