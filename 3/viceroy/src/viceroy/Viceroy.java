@@ -15,6 +15,8 @@ public class Viceroy {
 		rings = new Ring[ringCount];
 		ringForAll = new Ring();
 		//Max. distance between current and destination node to route on same ring
+		//used ringCount since log(n) in the formula is just an approximation for 
+		//the ringCount
 		maxNodeDist = Math.pow(ringCount,2) / peerCount;
 	}
 	
