@@ -74,7 +74,7 @@ public class Viceroy {
 		Node dest;
 		Node currNode;
 		int paths = 0;
-		while(paths < 10000){
+		while(paths < 100){
 			start = rings[(int)(Math.random()*5)].findSucc(Math.random());
 			dest = rings[(int)(Math.random()*5)].findSucc(Math.random());
 			while(start.ring == dest.ring && start.pos == dest.pos){
@@ -88,9 +88,10 @@ public class Viceroy {
 					break;
 				}
 				while(currNode.ring != 0){
+					pathLength++;
 					currNode = rings[currNode.ring - 1].findSucc(currNode.pos);
 				}
-				pathLength++;
+				//pathLength++;
 				currNode = routeStep(currNode, dest);
 			}
 			if(currNode.pos == dest.pos && currNode.ring == dest.ring){
