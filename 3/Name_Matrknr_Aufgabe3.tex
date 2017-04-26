@@ -64,10 +64,15 @@ $p(x)$ = $\{((i + 1)$ $mod$(n)$,$ $b)$, $((i + 2)$ $mod(n),$ $b)\}$ . In beiden 
 $x$ = $\{(i, b), (i, b(i))\}$ $\in$ $E_H$, wobei $b(i)$ die Bitfolge $b$ mit geflippten Bit an Stelle $i$ ist. Falls $k(w)$ = 0 gilt, so ist $k(w(i))$ = 1 und \\
 $p(x)$ = $\{(i, b), ((i + 1)$ $mod(n)$, $b(i))\}$. \\
 Sonst ist $p(x)$=$\{((i + 1)$ $mod(n),$ $b),$ $(i,$ $b(i))\}$. In beiden Fällen ist $p(x)\in E_X$. \\
-\\
+\newpage
 \textbf{Aufgabe 7:}
 Zeigen Sie, dass das Butterfly-Netzwerk $BF(k)$ knotensymmetrisch ist.
 \\
+\begin{figure}[!hb]
+	\includepdf[height=18cm, width=16cm]{7.pdf}
+\end{figure}
+\includepdf[height=18cm, width=16cm]{7-2.pdf}
+
 \textbf{Aufgabe 5:}
 Schreiben Sie ein Programm, dass das folgende Viceroy-Netzwerk
 erstellt. Weisen Sie zunächst 100 Knoten 5 Ringen zu, wie in der Vorlesung
@@ -77,5 +82,12 @@ zufällig aus und berechnen Sie Routing-Pfade zwischen diesen Knotenpaaren.
 Bei der Berechnung eines Routing-Pfades dürfen Sie ausschließlich auf
 lokale Nachbarschaftsinformationen zurückgreifen. Geben Sie anschließend
 die Verteilung der Längen dieser Routing-Pfade aus.
+\\
+\\
+In der folgenden Graphik ist die Verteilung der Längen der Routing-Pfade abgebildet.
+\begin{center}
+	\includegraphics[height=10cm, width=15cm]{auswertung.png}
+\end{center}
+
 \end{document}
 
