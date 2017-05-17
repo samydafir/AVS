@@ -1,0 +1,107 @@
+\documentclass[12pt,a4paper]{report}
+\usepackage{amssymb,amsthm,amsmath,amscd}
+\usepackage{latexsym}
+\usepackage{enumerate}
+\usepackage[german]{babel}
+\usepackage{verbatim}
+\usepackage[hyphens]{url}
+\usepackage{hyperref}
+\usepackage[utf8]{inputenc}
+\usepackage{pdfpages} 
+\usepackage{graphicx}
+\usepackage{csquotes}
+
+\begin{document}
+\begin{titlepage}
+	\begin{center}
+		
+		\vspace*{1.0cm}
+		\huge
+		\textsc{\bf{PS Algorithmen für verteilte Systeme}}
+		
+		\vspace*{4.0cm}
+		\textsc{
+			\normalsize{eingereicht von} \\[0.5\baselineskip]
+			{\large Baumgartner Dominik, Dafir Samy}
+		}
+		
+		\vspace*{3.0cm}
+		\textsc{
+			\normalsize{Gruppe  1(16:00)}
+		}
+		
+	\end{center}
+	
+\end{titlepage}
+\ \\
+\textbf{Aufgabe 11:}\\
+Schreiben Sie ein Programm, das den Push-Algorithmus auf einem vollständigen Graphen der Größe 10.000 simuliert und geben Sie die
+Verteilung der Laufzeiten von 100 unterschiedlichen Simulationsdurchläufen aus.
+\newpage
+\ \\
+\textbf{Aufgabe 12:}\\
+Zeigen Sie, dass der Push-Algorithmus im vollständigen Graphen der Größe $n>10^6$ mit positiver Wahrscheinlichkeit eine Laufzeit von mindestens $log_2(\frac{n}{2})+\frac{log_4(n)}{4}$ besitzt. Beachten Sie, dass für die Chernoff-
+Schranke folgende Monotonie-Eigenschaft gilt:
+\begin{center}
+$Pr[X \le (1 - \delta)\mu'] \le e^{\frac{-\delta^2\mu'}{3}}$ für alle $\mu'\le \mu$.
+\end{center}
+\ \\
+\begin{itemize}
+	\item Zuerst wird gezeigt, dass mit	Wahrscheinlichkeit $(\frac{1}{n})^{ld(\frac{n}{2})+\frac{log_4(n)}{4}}$ Knoten $v_0$ für $ld(\frac{n}{2})+\frac{log_4(n)}{4}$ Schritte ausschließlich mit sich selbst kommuniziert.\\
+	\\
+	Zu Beginn ist nur $v_0$ informiert. Die Wahrscheinlichkeit, dass dieser Knoten nun in einem Schritt sich selbst wählt ist $\frac{1}{n}$. Somit ist Die Wahrscheinlichkeit, dass der Knoten sich in  $ld(\frac{n}{2})+\frac{log_4(n)}{4}$ Schritten ausschließlich selbst wählt gleich $(\frac{1}{n})^{ld(\frac{n}{2})+\frac{log_4(n)}{4}}$.\\
+	Wendet man nun die Limes Funktion auf dieser Wahrscheinlichkeit an, folgt daraus:\\
+	$lim_{n\rightarrow \infty}(\frac{1}{n})^{ld(\frac{n}{2})+\frac{log_4(n)}{4}} = 0$.
+	\item Zeigen nun, dass man mindestens $ld(\frac{n}{2})$ Schritte benötigt, um $\frac{n}{2}$ Knoten zu informieren.\\
+	\\
+	Wissen, dass in jedem Schritt die Anzahl der informierten Knoten sich verdoppelt.
+	Also: $2^0 \rightarrow 2^1 \rightarrow 2^2 \rightarrow \dots \rightarrow 2^x$\\
+	Nach $x$ Schritten sollen mindestens $\frac{n}{2}$ Knoten informiert sein:\\
+	$2^x = \frac{n}{2}$\\
+	$\Rightarrow x = ld(\frac{n}{2})$\\
+	$\rightarrow$ Besitzt eine Laufzeit von $ld(\frac{n}{2})$\\
+	\item Sei $t_0 = ld(\frac{n}{2})$ und definiere $\{v_1 \dots v_{\sqrt{n}}\} = \tilde{H}(t_0) \subset H(t_0)$ bzw. \\
+	$\tilde{H}(t) = H(t) \cap \tilde{H}(t_0)$. O.B.d.A. seien $v_1 \dots v_k \in \tilde{H}(t)$ für $k=|\tilde{H}(t)|$, wobei $t>t_0$. Teste der Reihe nach Knoten $v_1 \dots v_k$, ob $v_i$ von einem Knoten des Graphen kontaktiert wird. Es ist zu zeigen, dass Knoten $vi$ mit Wahrscheinlichkeit
+	\begin{center}
+		$ \ge (1-\frac{1}{n-i+1})^n \ge (1-\frac{1}{n-k})^n$
+	\end{center}
+	von keinem Knoten kontaktiert wird und diese Schranke unabhängig von allen anderen Knoten aus $\tilde{H}(t)$ gilt.\\
+	\\
+	Gehen vom Best-Case aus, dass kein informierter Knoten, einen bereits von einem anderen informierten Knoten gewählten uninformierter Knoten auswählt. Dass zu Beginn ein Knoten  nun unseren Knoten $v_i$ auswählt is $\frac{1}{n}$. Pro Knoten den wir nun Durchlaufen, gibt es immer einen Knoten weniger zur Auswahl, da ja bereits vorher ein anderer Knoten informiert worden ist und dieser nicht noch einmal ausgewählt wird.
+	$\Rightarrow$ Je mehr Knoten nun in $\tilde{H}(t)$ durchlaufen wurden, umso weniger Knoten kann ein informierter auswählen, d.h. $\frac{1}{n-(i-1)}$ ist die Wahrscheinlichkeit, dass unser Knoten ausgewählt wird. Somit ist die Wahrscheinlichkeit, dass unser Knoten von keinem Knoten ausgewählt wird gleich $1-\frac{1}{n-(i-1)}$. Da nun aber nicht nur ein Knoten auswählen kann sonder $n$ verschiedene gilt:
+	$(1-\frac{1}{n-(i-1)})^n$. Wenn nun $i=k$, dann folgt, dass $\frac{1}{n-(k-1)} > \frac{1}{n-k}$ und somit gilt, dass Knoten $v_i$ mit Wahrscheinlichkeit
+	$(1-\frac{1}{n-i+1})^n \ge (1-\frac{1}{n-k})^n$	von keinem Knoten ausgewählt wird. Da wir alles global betrachtet haben und in jedem Schritt immer ein Knoten weniger wird, welcher aber nicht in  $\tilde{H}(t)$ liegen muss, ist diese Schranke unabhängig von  $\tilde{H}(t)$.\\
+	\item Aus $(1-\frac{1}{n-i+1})^{n-k} = \frac{1}{e}$   folgt $(1-\frac{1}{n-i+1})^n > \frac{1}{3}$. Zeigen nun, dass mit einer \enquote{guten} Wahrscheinlichkeit $|\tilde{H}(t+1)| \ge \frac{|\tilde{H}(t)|}{4}$, solange $|\tilde{H}(t)| \ge \sqrt[4]{n}$.\\
+	\\
+	Wenn nun $(1-\frac{1}{n-i+1})^{n-k} = \frac{1}{e}$ folgt, dass nun nach $n$ Schritten, welche mehr sind als $n-k$ der Ausdruck $(1-\frac{1}{n-i+1})^{n}$ größer werden muss. Da nun $e<3$ und somit $\frac{1}{e}>\frac{1}{3}$ folgt $(1-\frac{1}{n-i+1})^n > \frac{1}{3}$.\\
+	Annahme $|\tilde{H}(t)| \ge \sqrt[4]{n}$.\\
+	Sei $x_i=\begin{cases}
+	1 & \text{falls } v_i \text{ uninformiert bleibt}\\
+	0 & \text{sonst}\\
+	\end{cases}$\\
+	$X = \sum_{i=1}^{|\tilde{H}(t)|}x_i$\\
+	$\Rightarrow E(X) =E(\sum_{i=1}^{|\tilde{H}(t)|}x_i)= \sum_{i=1}^{|\tilde{H}(t)|}E(x_i)=\frac{|\tilde{H}(t)|}{3}$\\
+	Verwenden nun Chernoff-Schranke mit $\mu' = \mu$:\\
+	$P(X\ge(1-\delta)\mu)=P(X\ge(1+\delta)\frac{\sqrt[4]{n}}{3})\le e^{\frac{-\delta^2 \mu}{3}}=e^{\frac{-\delta^2 \frac{\sqrt[4]{n}}{3}}{3}}$\\
+	\\
+	Berechnen nun $\delta$:\\
+	$(1-\delta)\mu = \frac{|\tilde{H}(t)|}{4}$\\
+	$\Rightarrow \delta =1-\frac{\frac{|\tilde{H}(t)|}{4}}{\frac{|\tilde{H}(t)|}{3}} = \frac{1}{4}$\\
+	Somit ist\\
+	$P(X\ge(1-\delta)\mu)\le^{\frac{-\sqrt[4]{n}}{144}}$\\
+	\\
+	Sei nun $n=10^6$, dann folgt:\\
+	$P(X\ge(1-\delta)\mu)\le^{\frac{-\sqrt[4]{10^6}}{144}} = 0,8028$\\
+	\\
+	Nach $\frac{log_4(n)}{4}$ Schritten gilt:\\
+	$|\tilde{H}(t)| < \sqrt[4]{n}$\\
+	\\
+	Besitzt somit eine Laufzeit von $\frac{log_4(n)}{4}$.
+\end{itemize}
+Somit besitzt der Push-Algorithmus im vollständigen Graphen der Größe $n>10^6$ mit positiver Wahrscheinlichkeit eine Laufzeit von mindestens\\ $log_2(\frac{n}{2})+\frac{log_4(n)}{4}$
+
+
+
+
+\end{document}
+
