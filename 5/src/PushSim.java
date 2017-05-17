@@ -38,21 +38,5 @@ public class PushSim {
 		}
 		return true;
 	}
-
+	
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
