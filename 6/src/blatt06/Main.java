@@ -6,7 +6,7 @@ public class Main {
 		for(int i = 0; i < 100; i++){
 			Simulation sim = new Simulation (10000, 0.002);
 			sim.createGraph();
-			sim.push();
+			sim.pushPull();
 			System.out.println(sim.rounds + " " + sim.messages);
 		}
 	}
