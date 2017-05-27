@@ -43,7 +43,7 @@ public class Simulation {
 	}
 	
 	public void pushPull(){
-		double c = 50;
+		double c = 2;
 		int pushOnly = (int)(2 * c * Math.pow(Math.log(n),2));
 		int pushPullLimit = n / 3;
 		while(numOfInformed() < n){
