@@ -2,6 +2,12 @@ package blatt06;
 
 import java.util.ArrayList;
 
+/**
+ * 
+ * @author Samy Dafir, 1331483
+ * @author Dominik Bumgartner, 0920177
+ *
+ */
 public class Simulation {
 	
 	private ArrayList<Node> graph;
