@@ -2,6 +2,7 @@ package blatt08;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map.Entry;
 
 public class PAGraph {
@@ -26,12 +27,22 @@ public class PAGraph {
 	}
 	
 	public void insertNodes(int amount){
+		HashSet<Integer> triedNodes = new HashSet<>();
 		Node newNode;
 		Node potNeighbour;
 		for(int i = 0; i < amount; i++){
 			newNode = new Node(totNodes);
+			triedNodes.clear();
 			while(newNode.degree == 0){
 				potNeighbour = nodes.get((int)(Math.random() * nodes.size()));
+				while(triedNodes.contains(potNeighbour.id)){
+					if(triedNodes.size() == nodes.size()){
+						triedNodes.clear();
+					}else{
+						potNeighbour = nodes.get((int)(Math.random() * nodes.size()));
+						triedNodes.add(potNeighbour.id);
+					}
+				}
 				if(Math.random() < (double)potNeighbour.degree / totDeg){
 					totDeg += 2;
 					totNodes++;
