@@ -49,13 +49,15 @@ public class Node {
 	}
 	
 	public void processReceivedMsgs(){
-		int alpha = 100;
+		int alpha = 1;
 		if(state == 'u' && receivedAges.size() > 0){
 			state = 'a';
 			age = receivedAges.get(0);
-		}else if(state == 'a' && age >= Math.log(totalNodes)/Math.log(9)){
+		}
+		if(state == 'a' && age >= Math.log(totalNodes)/Math.log(9)){
 			state = 'g';
-		}else if(state == 'g'){
+		}
+		if(state == 'g'){
 			ctr++;
 			if(ctr == Math.ceil(alpha * Math.log(Math.log(totalNodes)/Math.log(2))/Math.log(2))){
 				state = 's';
@@ -67,6 +69,5 @@ public class Node {
 		selectedNodes.clear();
 		selectedBy.clear();
 		receivedAges.clear();
-	}
-	
+	}	
 }

@@ -32,6 +32,7 @@ public class Graph {
 		int msgs = 0;
 		Node startNode = graph.get((int)(10000 * Math.random()));
 		startNode.state = 'a';
+		startNode.age = 1;
 		while(!allInformed()){
 			rounds++;
 			for(Node currNode: graph){
@@ -42,17 +43,20 @@ public class Graph {
 					msgs += currNode.selectedBy.size();
 					for(Node selectedBy: currNode.selectedBy){
 						selectedBy.receivedAges.add(currNode.age);
-					}/*
-					msgs += currNode.selectedNodes.size();
-					for(Node selected: currNode.selectedNodes){
-						selected.receivedAges.add(currNode.age);
-					}*/
+						currNode.addAge(selectedBy.age);
+					}
+//					msgs += currNode.selectedNodes.size();
+//					for(Node selected: currNode.selectedNodes){
+//						selected.receivedAges.add(currNode.age);
+//						currNode.addAge(selected.age);
+//					}
 					
 				}
 			}
 			for(Node currNode: graph){
 				currNode.processReceivedMsgs();
 			}
+//			System.out.println("Informed: " + countInformed());
 		}
 		System.out.println("Rounds: " + rounds);
 		System.out.println("Messages: " + msgs);
@@ -66,13 +70,5 @@ public class Graph {
 		}
 		return true;
 	}	
+
 }
-
-
-
-
-
-
-
-
-
