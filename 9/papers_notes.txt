@@ -1,0 +1,69 @@
+﻿Doerr:
+- Every node has a cyclic list of neighbours.
+- If informed select random neighbour from list and inform.
+- Then always choose next neighbour on list and inform.
+- Absolute guarantee, that all nodes become informed after diam(G)
+- No neighbour is called twice
+-log(n) runtime bound also for sparsely connected graphs. In contrast to fully random model: Omega(log²n)
+- Speedups not visible in asymptotic runtime
+- Much more determined than the random model since once the first message has been sent out, all future
+  receivers are determined
+- Same as random modell: in a small timeframe nodes not called repeatedly. Over a larger timeinterval:
+  nodes called equally often (random selection and going around in cyclic list)
+  
+Karp:
+- push & pull
+- in parallel: only information exchange between two neighbours in one round
+- distributed: decision to forward or not made based on local information
+- address oblivious: player's state not dependent of address of neighbours, only on amount of neighbours
+- State also dependent on globall known round number
+- push&pull: O(ln(n)) rounds, O(lnln(n)) messages
+- Depends on right estimate of termination time: Sensitive to errors in information spreading
+- median-counter-algorithm: O(lnn) rounds, O(n lnlnn) messages + any probability distribution
+- can be executed without global knowledge of involved players
+- general lower bounds for all algorithms Omega(n lnlnn) messages
+- lower bound for epidemic algorithms: not linear (n). Spreading info in O(lnn) rounds requires Omega(n) 
+  transmissions.
+simple push&pull: one player starts a rumor. age incremented in every round. each player pushes & pulls 
+  until age > log3(n) + O(lnlnn).
+  -> Algo informs all players in log3(n) + O(lnlnn) rounds using O(n lnlnn) messages
+- start phase: O(lnlnn) rounds to inform (lnn)^4 nodes
+- exp growth: ends after n / lnn informed players: log3(n) +- O(lnlnn) rounds
+- quadratic shrinking: O(lnlnn) rounds. ends at sqrt(n)*(lnn)^4 informed nodes
+- final phase: constant number of rounds
+- not very robust
+median-counter-algorithm:
+- states: A not yet received, B or C: push or pull, D stop propagating
+- B: ctr(v,r) B-m. m = ctr. irrelevant in other states
+- A: player does not know the rumor. ctr always 0. Receives from B -> state B-1. Receives from C -> state C
+- B: if  receives r from more players in state B-m' m' >= m  than from state A or B-m'' m'' < m then
+  B-m = B-(m+1)
+  Exception: if ctr = ctrmax. ctrmax = O(lnlnn) or message from C -> switch to C
+- Player stay in state C for most O(lnlnn) rounds then switches to D, terminates spreading
+- ctr tells when exponential growth switches to quadratic shrinking
+- All but failed nodes informed in O(logn) rounds using O(n lnlnn) messages
+
+Elsässer:
+Model I:
+- each node establishes channels with four neighbours. messages bidirectional
+Model II:
+- in each round choose one node from those not selected in the (t - 1) mod 4 previous rounds.
+Both models:
+- O(logn) timesteps, O(n loglogn) messages, result optimal
+ModelI:
+- Nodes may receive/ send messages from/to all connected neighbours
+- Runtime: O(logn) rounds. O(n loglogn) messages
+- place info on one node
+- node states: A active, U uninformed, G going down, S sleeping
+- Every node u:
+	* chooses 4 different neighbours at random (also gets contacted by others)
+	* if in a or g: send message with rumor and age to all who established a connection
+	* Receive messages with rumor and age from all who established a connection
+	* compute locally:  if uninformed: change state to a and get first received age
+					    if in a: age++ and if age > log9(n) change to g
+						if in g: ctr++ if ctr = a*loglogn change to s
+
+Model II:
+- only choose one node from not previously selected nodes
+- switch from a to g if age >= log3(n)
+- distributes info within O(logn) rounds using O(n loglogn) messages
