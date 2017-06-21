@@ -35,6 +35,32 @@
 
 \section*{Aufgabe 16}
 
+\subsection*{Beschreibung:}
+\textbf{Zugrundeliegendes Modell:}\\
+ Hierbei wurde das Randomized-Rumorspreading-Modell verwendet. Gegeben ist ein Graph $G_t=(V,E_t \subseteq VxV)$ mit $t \ge 1$. In jeder Runde sucht sich eine Person $u \in V$ einen Kommunikationspartner $v \in V$ zufällig (unabhängig und gleich verteilt) aus und ruft diesen an. Eine Verbindung kann nur zwischen zwei benachbarten Knoten zustande kommen und eine Nachricht kann in beide Richtungen übermittelt werden. Zu beginn wir ein Gerücht verbreitet, Person $u$ kann nun entscheiden ob sie Person $v$ dieses Gerücht übermittelt unabhängig davon ob $v$ dieses bereits weiß oder nicht.\\
+\\
+\textbf{Modell I Karp:}\\
+Beginn mit Push\&Pull. Zu beginn gibt es ein Gerücht und in jeder Runde pusht\&pullt jeder Knoten bis das Alter des Gerüchts (welches in jeder Runde erhöht wird) größer als $t_{max} = \log_3(n)+O(\ln(\ln(n))$ ist.\\
+Startphase: $O(ln(ln(n)))$ Runden um $(\ln(n))^4$ Knoten zu informieren.\\
+Exponential-Growth-Pahse: Endet nach $\frac{n}{\ln(n)}$ informierten Knoten und\\ $\log_3(n) \pm O(ln(ln(n)))$ Runden.\\
+Quadratic-Shrinking-Pahse: Endet bei $\sqrt{n}*(\ln(n))^4$ informierten Knoten nach $=(\ln(\ln(n)))$ Runden.\\ 
+Finale-Phase: Konstante Anzahl an runden\\
+Ob nun ein Knoten das Gerücht verbreitet oder nicht hängt vom Zustand des Knotens ab (address-oblivious: Knoten Zustand unabhängig von den Adressen der Nachbarn aber abhängig von der Anzahl der Nachbarn). In $O(\ln(n))$ Runden wird das Gerücht an alle Knoten mit $O(n\ln(\ln(n)))$ Übertragungen gesendet. Der verwendete Push\&Pull Algorithmus basiert auf dem Median-Counter-Algorithmus. Es wird außerdem generell niedrigere untere Schranken von $\Omega (n ln(\ln(n)))$ Übertragungen verwendet.
+\\
+\\
+\textbf{Modell II Doerr:}\\
+Verwende ein Quasi-Random-Modell. Jeder Knoten besitz eine zyklische Liste an Nachbarn. Wenn ein Knoten informiert wird, sucht sich dieser in der nächsten Runde einen Nachbarn aus seiner Liste aus. In jeder darauffolgenden Runden sendet dieser Knoten weiter Nachrichten an die Nachbarknoten in der Reihenfolge seiner Liste. Daraus folgt, dass alle Knoten in $d(G)$ informiert werden. Dieser Algorithmus besitzt eine $O(\log(n))$ Laufzeit Grenze welche auch für sparse connected random graphs mit $p=\frac{\log(n)+\omega(1)}{n}$ und einer unteren Schranke von $\Omega(\log^2(n))$ gilt, sodass mit Wahrscheinlichkeit $1-n^{-1}$ alle Knoten informiert werden. Betrachten auch sog. Expanding-Graphs mit 3 Eigenschaften:\\
+Eigenschaft 1: Knotenexpansion von nicht zu großen Teilmengen\\
+Eigenschaft 2: Kantenexpansion\\
+Eigenschaft 3: Regularität des Graphen
+\\
+\\
+\textbf{Modell III Elsässer:}\\
+Git zwei Modelle: Modell 1: Zu beginn ein Gerücht, dann in jeder Runde stellt ein Knoten eine Verbindung mit vier seiner Nachbarn her. Knotenzustände: A active, U uninformed, G going down, S sleeping. Wenn der Knoten den Zustand A oder G besitzt, schickt dieser das Gerücht und dessen Alter an alle vier ausgewählten Knoten weiter und er kann von den anderen Knoten das Gerücht erhalten. Ein Knoten wechselt von Zustand U nach A, wenn dieser ein Gerücht bekommt.
+Von Zustand A nach G, wenn das Alter $>\log_9(n)$ ist und von G nach S, wenn $counter = a*\log(\log(n))$ ist. Nachrichten können in beide Richtungen versendet werden.\\
+Modell 2: Auch hier zu beginn ein Gerücht, dann in jeder Runde wählt Knoten $u$ einen seiner Nachbarn aus einer Liste der nicht gewählten Nachbarn in $t-((t-1)mod(4))$ Schritten und stellt eine Verbindung zu ihm her. Wechselt von Zustand A nach G, wenn das Alter des Gerüchts $\ge \log_3(n)$ ist. Nachrichten können in beide Richtungen versendet werden.\\
+Wenn nun $p>\frac{\log^{\delta}(n)}{n}$, mit $\delta$ passend gewählt, ist die Anzahl der Runden $O(\log(n))$ und $O(n\log(\log(n)))$ Nachrichten.
+
 \subsection*{Implementierung:}
 Für diesen Teil wurde der Rumor-Spreading Algorithmus (Model I) nach Elsässer und Sauerwald implementiert und empirisch hinsichtlich Laufzeit (Runden) und versendeten Nachrichten ausgewertet. Der implementierte Algorithmus wurde auf einem 
 Zufallsgraphen $G_{n,p}$ mit n = 10000 und p = 0.005 getestet.
