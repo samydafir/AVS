@@ -40,12 +40,11 @@
  Hierbei wurde das Randomized-Rumorspreading-Modell verwendet. Gegeben ist ein Graph $G_t=(V,E_t \subseteq VxV)$ mit $t \ge 1$. In jeder Runde sucht sich eine Person $u \in V$ einen Kommunikationspartner $v \in V$ zufällig (unabhängig und gleich verteilt) aus und ruft diesen an. Eine Verbindung kann nur zwischen zwei benachbarten Knoten zustande kommen und eine Nachricht kann in beide Richtungen übermittelt werden. Zu beginn wir ein Gerücht verbreitet, Person $u$ kann nun entscheiden, ob die Person $v$ dieses Gerücht übermittelt unabhängig davon ob $v$ dies bereits kennt.\\
 \\
 \textbf{Modell I Karp:}\\
-Beginn mit Push\&Pull. Zu Beginn gibt es ein Gerücht und in jeder Runde pusht\&pullt jeder Knoten bis das Alter des Gerüchts (welches in jeder Runde erhöht wird) größer als $t_{max} = \log_3(n)+O(\ln(\ln(n))$ ist.\\
-Startphase: $O(ln(ln(n)))$ Runden um $(\ln(n))^4$ Knoten zu informieren.\\
-Exponential-Growth-Phase: Endet nach $\frac{n}{\ln(n)}$ informierten Knoten und\\ $\log_3(n) \pm O(ln(ln(n)))$ Runden.\\
-Quadratic-Shrinking-Phase: Endet bei $\sqrt{n}*(\ln(n))^4$ informierten Knoten nach $=(\ln(\ln(n)))$ Runden.\\ 
-Finale-Phase: Konstante Anzahl an Runden\\
-Ob nun ein Knoten das Gerücht verbreitet oder nicht hängt vom Zustand des Knotens ab (address-oblivious: Knotenzustand unabhängig von den Adressen der Nachbarn aber abhängig von der Anzahl der Nachbarn). In $O(\ln(n))$ Runden wird das Gerücht an alle Knoten mit $O(n\ln(\ln(n)))$ Übertragungen gesendet. Der verwendete Push\&Pull Algorithmus basiert auf dem Median-Counter-Algorithmus. Es wird außerdem die generell niedrigere untere Schranken von $\Omega (n ln(\ln(n)))$ Übertragungen gezeigt.
+Verwenden den Median-Counter-Algorithmus, der $O(\ln(n))$ Runden benötigt um alle Knoten zu informieren und $O(n\ln(\ln(n)))$ Nachrichten sendet. Ob nun ein Knoten das Gerücht verbreitet oder nicht hängt vom Zustand des Knotens ab (address-oblivious: Knotenzustand unabhängig von den Adressen der Nachbarn aber abhängig von der Anzahl der Nachbarn). Dieser Algorithmus ist nun unabhängig von der Wahrscheinlichkeitsverteilung mit welcher die Nachbarn ausgewählt werden, sofern jeder Knoten unabhängig agiert und die selben Wahrscheinlichkeitsverteilungen verwendet. Es wird außerdem die generell niedrigere untere Schranken von $\Omega (n ln(\ln(n)))$ Übertragungen gezeigt. Der Algorithmus besitzt vier verschiedene Zustände: A,B,C und D. Zustand A bedeutet, dass der Knoten noch uninformiert ist. In jedem anderen Zustand besitzt der Knoten bereits das Gerücht. Wenn sich der Knoten in Zustand B oder C befindet, dann pusht\&pullt er das Gerücht zum jeweiligen verbundenen Knoten. In Zustand D verbreitet der Knoten das Gerücht nicht mehr. \\
+Knoten im Zustand A:
+bekommt ein solcher Knoten nun ein Gerücht von einem Knoten mit Zustand B, dann wechselt er von A nach B-1 (1...counter). Bekommt er es von einem Knoten mit Zustand C, dann wechselt er ebenfalls nach Zustand C.\\
+Knoten im Zustand B-$m$: Median Regel: Wenn ein Knoten im Zustand B-$m$ mehr Gerüchte gesendet bekommt als Knoten im Zustand B-$m'$ mit $m' \ge m$ sind, als Knoten im Zustand A und B-$m''$ mit $m'' < m$, dann wechselt er auf Zustand B-$(m+1)$. Ausnahme dann, wenn der counter sein maximum erreicht hat ($O(\ln(\ln(n)))$), dann wechselt er auf Zustand C. Der Knoten wechselt auch auf Zustand C, wenn er das Gerücht von einem Knoten im Zustand C bekommt.\\
+Knoten im Zustand C: Knoten bleiben für $O(\ln(\ln(n)))$ Runden in diesem Zustand und wechseln dann auf D.
 \\
 \\
 \textbf{Modell II Doerr:}\\
