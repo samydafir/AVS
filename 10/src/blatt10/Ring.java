@@ -44,12 +44,18 @@ public class Ring {
 		int TTL = 1;
 		int distSent = 0;
 		int messages = 0;
+		int steps = 0;
 		int rounds = 0;
 		RGNode right;
 		RGNode left;
 		boolean leaderFound = false;
 		while(!leaderFound){
 			rounds++;
+			if(TTL < rGRing.size()){
+				steps += TTL * 2;
+			} else{
+				steps += rGRing.size() * 2;
+			}
 			for(RGNode currNode: rGRing){
 				if(currNode.active){
 					distSent = 0;
@@ -77,6 +83,7 @@ public class Ring {
 			TTL *= 2;
 			refreshRGNodes();
 		}
+		System.out.println(steps);
 		System.out.println(rounds);
 		System.out.println(messages);
 	}
@@ -89,7 +96,7 @@ public class Ring {
 			messages++;
 		}
 		updateCWNodes();
-		
+			
 		while(!leaderFound()){
 			rounds++;
 			for(CWNode currNode: cWRing){
@@ -101,11 +108,7 @@ public class Ring {
 			updateCWNodes();
 		}
 		System.out.println(messages);
-		System.out.println(rounds);
-		
-		
-		
-		
+		System.out.println(rounds);		
 	}
 	
 	private void updateCWNodes(){
@@ -123,21 +126,11 @@ public class Ring {
 		return false;
 	}
 	
-	
-	
-	
 	private void refreshRGNodes(){
 		for(RGNode currNode: rGRing){
 			if(currNode.giveUp){
 				currNode.active = false;
 			}
 		}		
-	}	
-	
+	}		
 }
-
-
-
-
-
-

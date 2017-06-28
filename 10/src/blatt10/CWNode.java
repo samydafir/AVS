@@ -8,6 +8,7 @@ public class CWNode {
 	boolean send;
 	boolean leader;
 	CWNode rightNeighbour;
+	boolean exactAlgo = true;
 	
 	public CWNode(int id){
 		this.id = id;
@@ -26,6 +27,12 @@ public class CWNode {
 		} else{
 			send = false;
 		}
+		
+		if(exactAlgo){
+			if(max == id)
+				send = true;
+		}
+		
 		recvd = -1;
 	}
 	
