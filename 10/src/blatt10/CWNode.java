@@ -8,7 +8,7 @@ public class CWNode {
 	boolean send;
 	boolean leader;
 	CWNode rightNeighbour;
-	boolean exactAlgo = true;
+	boolean exactAlgo = false;
 	
 	public CWNode(int id){
 		this.id = id;
