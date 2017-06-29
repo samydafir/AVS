@@ -65,22 +65,6 @@ letzten Runde nur $2*10000$ Hops gezählt werden, da der Sender ja seine die erh
 Der Clockwise Algorithmus hat eine nicht reduzierbare Rundenanzahl von n, da es n Knoten gibt und es n Runden/Hops dauert, bis die
 eigene Nachricht wieder beim Knoten mit der größten ID ankommt.
 Bzgl. Es wurde jedoch auch der worst-case Fall mit sortierten IDs getestet. Dabei ergab sich eine Nachrichtenanzahl von 50005000. Dies entspricht genau $\frac{n*(n+1)}{2}$. In beiden Versionen bleibt die Nachrichtenanzahl weit unter der worst case Anzahl von $n^2$\\
-Der Radius Growth Algorithmus weist ziemlich exakt das Laufzetverhalten auf, das in der VO besprochen und gezeigt wurde. Nachrchtenanzahl ca. $4*n*log(n)$ und Hopanzahl ca. $5*n = O(n)$. Im Gegensatz zu Clockwise bleibt der Radius Growth nicht so stark unter den worst-case Werten und weist darum, trotz der niedrigeren asymptotischen Laufzeit eine größere Nachrichtenanzahl auf als dieser.
+Der Radius Growth Algorithmus weist ziemlich exakt das Laufzetverhalten auf, das in der VO besprochen und gezeigt wurde. Nachrchtenanzahl ca. $4*n*log(n)$ und Hopanzahl ca. $5*n = O(n)$. Im Gegensatz zu Clockwise bleibt der Radius Growth nicht so stark unter den worst-case Werten und weist darum, trotz der niedrigeren asymptotischen Laufzeit eine größere Nachrichtenanzahl auf als dieser. Jedoch ist zu bemerken, dass der Radius Growth Algorithmus nur $O(log(n))$ Runden benötigt und damit, was auch bei unseren Tests auffällt, viel schneller läuft als der Clockwise Algorithmus.
 
 \end{document}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
